@@ -1,9 +1,11 @@
 const express = require("express");
-require("./mongoDB")
+const destinationRouter = require("./Routers/destination.router.js");
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/destinations",destinationRouter)
 
 app.get("/",(_,res)=>{
   res.send("tripAdvisor API")
