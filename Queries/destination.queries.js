@@ -46,7 +46,18 @@ const readTravelDestinationsByLocation = async(cityOrCountry)=>{
     throw error
   }
 }
-const readTravelDestinationsByRating = async(rating)=>{
+const readTravelDestinationsByRating = async()=>{
+  try{
+    const savedDestinations = await Destination.find().sort({rating:-1});
+    if(!savedDestinations.length){
+      throw new Error("No destinations found");
+    }
+    return savedDestinations;
+  }catch(error){
+    throw error
+  }
+}
+const filterDestinationsByRating = async(rating)=>{
   try{
     const savedDestinations = await Destination.find({rating:{$gte:rating}}).sort({rating:-1});
     if(!savedDestinations.length){
@@ -80,4 +91,4 @@ const deleteTravelDestination = async(destinationId)=>{
   }
 }
 
-module.exports = {createTravelDestination,getTravelDestinationByName,getAllTravelDestinations,readTravelDestinationsByLocation,updateTravelDestination,readTravelDestinationsByRating,deleteTravelDestination};
+module.exports = {createTravelDestination,getTravelDestinationByName,getAllTravelDestinations,readTravelDestinationsByLocation,updateTravelDestination,filterDestinationsByRating,deleteTravelDestination,readTravelDestinationsByRating};

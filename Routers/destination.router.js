@@ -1,11 +1,12 @@
 const express = require("express");
 const destinationRouter = express.Router();
-const {createTravelDestinationController,getTravelDestinationByNameController,getAllTravelDestinationsController,readTravelDestinationsByLocationController,updateTravelDestinationController,readTravelDestinationsByRatingController,deleteTravelDestinationController} = require("../Controllers/destination.controller.js");
+const {createTravelDestinationController,getTravelDestinationByNameController,getAllTravelDestinationsController,readTravelDestinationsByLocationController,readTravelDestinationsByRatingController,updateTravelDestinationController,filterDestinationsByRatingController,deleteTravelDestinationController} = require("../Controllers/destination.controller.js");
 
 destinationRouter.get("/",getAllTravelDestinationsController);
+destinationRouter.get("/rating",readTravelDestinationsByRatingController);
 destinationRouter.get("/:name",getTravelDestinationByNameController);
 destinationRouter.get("/location/:location",readTravelDestinationsByLocationController);
-destinationRouter.get("/rating/:rating",readTravelDestinationsByRatingController);
+destinationRouter.get("/filter/:rating",filterDestinationsByRatingController);
 
 
 destinationRouter.post("/",createTravelDestinationController);

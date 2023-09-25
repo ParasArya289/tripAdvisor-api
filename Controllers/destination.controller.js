@@ -1,4 +1,4 @@
-const {createTravelDestination,getTravelDestinationByName,getAllTravelDestinations,readTravelDestinationsByLocation,updateTravelDestination,readTravelDestinationsByRating,deleteTravelDestination} = require("../Queries/destination.queries.js");
+const {createTravelDestination,getTravelDestinationByName,getAllTravelDestinations,readTravelDestinationsByLocation,updateTravelDestination,filterDestinationsByRating,deleteTravelDestination,readTravelDestinationsByRating} = require("../Queries/destination.queries.js");
 
 const createTravelDestinationController = async(req,res)=>{
   const {body} = req;
@@ -36,9 +36,17 @@ const readTravelDestinationsByLocationController = async(req,res)=>{
   }
 }
 const readTravelDestinationsByRatingController = async(req,res)=>{
+  try{
+    const destinations = await readTravelDestinationsByRating();
+    res.status(200).json({message:"Destinations found",destinations})
+  }catch(error){
+    res.status(500).json({error:error.message})
+  }
+}
+const filterDestinationsByRatingController = async(req,res)=>{
   const {rating} = req.params;
   try{
-    const destinations = await readTravelDestinationsByRating(rating);
+    const destinations = await filterDestinationsByRating(rating);
     res.status(200).json({message:"Destinations found",destinations})
   }catch(error){
     res.status(500).json({error:error.message})
@@ -65,4 +73,5 @@ const deleteTravelDestinationController = async(req,res)=>{
   }
 }
 
-module.exports = {createTravelDestinationController,getTravelDestinationByNameController,getAllTravelDestinationsController,readTravelDestinationsByLocationController,updateTravelDestinationController,readTravelDestinationsByRatingController,deleteTravelDestinationController};
+
+module.exports = {createTravelDestinationController,getTravelDestinationByNameController,getAllTravelDestinationsController,readTravelDestinationsByLocationController,updateTravelDestinationController,filterDestinationsByRatingController,deleteTravelDestinationController,readTravelDestinationsByRatingController};
